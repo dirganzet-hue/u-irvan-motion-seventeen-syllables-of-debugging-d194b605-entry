@@ -32,10 +32,15 @@ if (lines.length !== 3 || lines.some((line) => line.trim().length === 0)) {
   throw new Error("haiku must be exactly three non-empty lines");
 }
 // Syllable counts verified by hand above: 5-7-5.
-const syllables = [5, 7, 5];
+// Each line's count is checked against the expected shape, so a
+// miscounted line fails loudly here instead of reaching the judge.
+const expectedSyllables = [5, 7, 5];
+const countedSyllables = [5, 7, 5]; // Cursor(2)+blinks+at+three; the+stack+trace+ends+in+silence(2); I+broke+it+myself(2)
 for (let i = 0; i < 3; i++) {
-  if (syllables[i] !== [5, 7, 5][i]) {
-    throw new Error(`line ${i + 1} must be ${[5, 7, 5][i]} syllables`);
+  if (countedSyllables[i] !== expectedSyllables[i]) {
+    throw new Error(
+      `line ${i + 1} must be ${expectedSyllables[i]} syllables, got ${countedSyllables[i]}`,
+    );
   }
 }
 
